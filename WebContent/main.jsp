@@ -1,5 +1,9 @@
+ <%@page import="com.opensymphony.xwork2.ActionContext"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
+String username = (String)ActionContext.getContext().getSession().get("username");	
+
+
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
@@ -71,7 +75,7 @@ String[] friendList = (String[])request.getAttribute("friendlist");
           <a class="brand" href="#">Fancy Clipboard</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-              Welcome,  <span id="myID"><%=uid%></span>, 
+              Welcome,  <span id="myID"><%=username%></span>, 
               <a href="#" class="navbar-link">(Log out)</a>
             </p>
             <ul class="nav">

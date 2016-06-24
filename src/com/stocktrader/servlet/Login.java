@@ -1,5 +1,6 @@
 package com.stocktrader.servlet;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.stocktrader.db.DBUser;
 
@@ -25,7 +26,9 @@ public class Login extends ActionSupport {
 		System.out.println(""+ username+", "+ password);
 		DBUser dbuser = new DBUser();
 		String result = dbuser.checkLogin(username, password);
+		
 		if(result != null){
+			ActionContext.getContext().getSession().put("username", username);
 			return "success";
 		}
 		return "error";

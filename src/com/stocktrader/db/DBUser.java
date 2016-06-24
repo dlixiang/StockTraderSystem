@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 
 
@@ -16,6 +17,41 @@ public class DBUser {
 	private Statement stm = null;
 	private ResultSet rs = null;
 	private PreparedStatement pstm = null;
+	
+	private Vector<Stock> stockVector = null;
+	
+	public Vector<Stock> getStockVector(){
+		String stockcode = null;
+		String stockname = null;
+		Stock stock = null;
+		int count = 0;
+		stockVector = new Vector<Stock>();
+		try
+		{
+			conn=(Connection) DBTools.getConnection();
+			String sql="select * from stock limit 0,10";
+			
+			if(!conn.isClosed()){
+				stm = conn.createStatement();
+				rs = stm.executeQuery(sql);
+				while (rs.next())
+				{
+					stockcode = rs.getString("stockcode");
+					stockname = rs.getString("name");
+					stock = new Stock(stockcode, stockname);
+					stockVector.add(stock);
+					if (count > 10) {
+						break;
+					}
+					count++;
+				}
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return stockVector;
+	}
 	
 	public String checkLogin(String username, String password){
 		String uname = null;

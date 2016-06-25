@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-
-
+import com.stocktrader.model.StockModel;
 
 
 public class DBUser {
@@ -18,14 +17,14 @@ public class DBUser {
 	private ResultSet rs = null;
 	private PreparedStatement pstm = null;
 	
-	private Vector<Stock> stockVector = null;
+	private Vector<StockModel> stockVector = null;
 	
-	public Vector<Stock> getStockVector(){
+	public Vector<StockModel> getStockVector(){
 		String stockcode = null;
 		String stockname = null;
-		Stock stock = null;
+		StockModel stock = null;
 		int count = 0;
-		stockVector = new Vector<Stock>();
+		stockVector = new Vector<StockModel>();
 		try
 		{
 			conn=(Connection) DBTools.getConnection();
@@ -38,7 +37,7 @@ public class DBUser {
 				{
 					stockcode = rs.getString("stockcode");
 					stockname = rs.getString("name");
-					stock = new Stock(stockcode, stockname);
+					stock = new StockModel(stockcode, stockname);
 					stockVector.add(stock);
 					if (count > 10) {
 						break;
@@ -135,5 +134,25 @@ public class DBUser {
 		}
 		return res;
 		
+	}
+
+
+	public StockModel searchStock(String searchkeyword) {
+		StockModel resStockModel = null;
+		conn = DBTools.getConnection();
+		try {
+			if (!conn.isClosed()) {
+				stm = conn.createStatement();
+				rs = stm.executeQuery("select * from stock where stockcode='"+searchkeyword+"'");
+				while (rs.next()){
+					resStockModel = new StockModel(searchkeyword, rs.getString("name"));
+					
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resStockModel;
 	}
 }

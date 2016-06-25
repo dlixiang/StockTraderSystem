@@ -1,26 +1,29 @@
 
-<%@page import="com.stocktrader.db.Stock"%>
+<%@page import="com.stocktrader.model.StockModel"%>
 <%@page import="com.opensymphony.xwork2.ActionContext"%>
 
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 	String username = (String) ActionContext.getContext().getSession()
-			.get("username");
-	Vector<Stock> stockVector = (Vector<Stock>)ActionContext.getContext().getSession()
-			.get("stockvector");
+	.get("username");
+	Vector<StockModel> stockVector = (Vector<StockModel>)ActionContext.getContext().getSession().get("stockvector");
+	StockModel stockModel = (StockModel)ActionContext.getContext().getSession().get("stockmodel");
+	String searchResult = (String)ActionContext.getContext().getSession().get("searchresult");
+	
+	
 
-	String path = request.getContextPath();
+	/* String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	+ request.getServerName() + ":" + request.getServerPort()
+	+ path + "/"; */
 %>
 
 <%
-	String uid = (String) request.getAttribute("uid");
+	/* String uid = (String) request.getAttribute("uid");
 	String fid = (String) request.getAttribute("fid");
 	String tp = (String) request.getAttribute("uctxtp");
 	String ctx = (String) request.getAttribute("uctx");
-	String[] friendList = (String[]) request.getAttribute("friendlist");
+	String[] friendList = (String[]) request.getAttribute("friendlist"); */
 %>
 
 <!DOCTYPE html>
@@ -106,35 +109,10 @@ body {
 							href="#" id="btn_delFriend">-(delete)</a>
 						</label>
 						<li class="nav-header">ME</li>
-						<li class="active" id="myli"><a href="#" class="flink"><%=uid%></a></li>
+						<li class="active" id="myli"><a href="#" class="flink">bofan</a></li>
 						<li class="nav-header">FRIEND LIST</li>
-						<%
-							if (friendList != null) {
-								for (int i = 0; i < friendList.length; i++) {
-									out.print("<li><a href=\"#\" class=\"flink\">"
-											+ friendList[i] + "</a></li>");
-								}
-							}
-						%>
+						
 
-						<%
-							String msg_delfrd = (String) request.getAttribute("msg_delfrd");
-							if (msg_delfrd != null) {
-								if (msg_delfrd.equals("suc") || msg_delfrd.equals("notFound")) {
-
-									out.println("<script type=\"text/javascript\">");
-									out.println("$(\'#DelFrdSucInfo\').fadeIn(1000);");
-									out.println("$(\'#DelFrdSucInfo\').fadeIn(1000);");
-									out.println("$(\'#DelFrdSucInfo\').delay(1000).fadeOut(1000);");
-									out.println("</script>");
-								} else {
-									out.println("<script type=\"text/javascript\">");
-									out.println("$(\'#DelFrdFailInfo\').fadeIn(1000);");
-									out.println("$(\'#DelFrdFailInfo\').delay(1000).fadeOut(1000);");
-									out.println("</script>");
-								}
-							}
-						%>
 
 						<label class="alert alert-success" style="display: none"
 							id="DelFrdSucInfo"> Delete friend successfully ! </label>
@@ -163,7 +141,7 @@ body {
 							out.println("return;");
 							out.println("}};");
 							out.println("setTimeout(\"count()\", 1000);"); */
-
+	
 							//out.println("$(\'#AddFrdNotFoundInfo\').fadeIn(1000);");
 							//out.println("$(\'#AddFrdNotFoundInfo\').delay(1000).fadeOut(1000);");
 							out.println("</script>");
@@ -187,7 +165,7 @@ body {
 							out.println("$(\'#AddFrdFailInfo\').fadeIn(1000);");
 							out.println("$(\'#AddFrdFailInfo\').delay(1000).fadeOut(1000);");
 							out.println("</script>");
-
+	
 							//request.getRequestDispatcher("clipboard.jsp").forward(request, response);
 						}
 					}
@@ -209,73 +187,24 @@ body {
 
 
 
-
-			<div id="AddFriendModal" class="modal hide fade" tabindex="-1"
-				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">x</button>
-					<h3 id="myModalLabel"></h3>
-				</div>
-				<div class="modal-body">
-					<form class="form-signin" id="addfriendform" action="AddFriend"
-						method="post">
-						<h2 class="form-signin-heading">Add Friend</h2>
-						<input type="text" class="input-block-level" name="friendID"
-							placeholder="Please input your friend's name"> <input
-							type="hidden" name="userID" value="<%=uid%>"></input>
-
-						<button class="btn btn-large btn-primary" type="submit">Add</button>
-					</form>
-
-				</div>
-				<div class="modal-footer">
-					<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-					<!-- <button id="btn_signin" class="btn btn-primary">Sign in</button> -->
-				</div>
-			</div>
-
-
-
-			<div id="UploadFileModal" class="modal hide fade" tabindex="-1"
-				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">x</button>
-					<h3 id="myModalLabel"></h3>
-				</div>
-				<div class="modal-body">
-					<form class="form-signin" id="addfriendform" action="UploadFile"
-						method="post" enctype="multipart/form-data">
-						<h2 class="form-signin-heading">Upload file</h2>
-						<input type="file" class="input-block-level" name="filepath">
-						<br>
-						<button class="btn btn-large btn-primary input-block-level"
-							type="submit">Upload</button>
-						<input type="hidden" name="userID_file" value="<%=uid%>"></input>
-					</form>
-
-				</div>
-				<div class="modal-footer">
-					<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-					<!-- <button id="btn_signin" class="btn btn-primary">Sign in</button> -->
-				</div>
-			</div>
-
-
-
-
-
 			<div class="span9">
 				<div class="hero-unit">
 					<h2>Company Stock Code</h2>
 
-					<input class="span2" type="text" name="searchtext"
-						placeholder="search...">
+					<form id="searchform"
+						action="search" method="post">
 
-					<button class="btn" id="btn_upload" type="submit" name="search"
-						value="Search">↑(Upload)</button>
+						<input class="span2" type="text" name="searchkeyword"
+							placeholder="search keyword...">
 
+						<button class="btn" id="btn_search" type="submit" name="search"
+							value="Search">Search</button>
+					</form>
+
+					<%
+						if(searchResult != null){
+							if(searchResult.equals("success")){
+					%>
 					<table class="table table-striped">
 						<tr>
 							<td>1</td>
@@ -290,18 +219,37 @@ body {
 							<td>Approved</td>
 						</tr>
 						<%
-						for(int i = 0; i<stockVector.size(); i++){
+							for(int i = 0; i<stockVector.size(); i++){
 						%>
 						<tr>
-							<td><%out.println(stockVector.get(i).code); %></td>
-							<td><%out.println(stockVector.get(i).name); %></td>
+							<td>
+								<%
+									out.println(stockVector.get(i).code);
+								%>
+							</td>
+							<td>
+								<%
+									out.println(stockVector.get(i).name);
+								%>
+							</td>
 							<td>01/04/2012</td>
 							<td>Approved</td>
 						</tr>
 						<%
-						}
+							}
 						%>
 					</table>
+
+					<%
+						} else if(searchResult.equals("error")){
+					%>
+					<label class="alert alert-error" id="DelFrdFailInfo"> search error ! </label>
+					<%
+						}
+					}
+					%>
+
+
 
 				</div>
 
@@ -348,7 +296,7 @@ body {
 	<script type="text/javascript" src="assets/js/button.js"></script>
 	<script type="text/javascript" src="assets/js/clipboard.js"></script>
 	<script type="text/javascript" src="assets/js/local.js"></script>
-	
+
 
 
 	<!-- <script src="../assets/js/jquery.js"></script>

@@ -1,11 +1,13 @@
-package com.stocktrader.db;
+package com.stocktrader.model;
 
-public class Stock {
+public class StockModel {
 	public String name;
 	
 	public String code;
 	
-	public Stock(String code, String name) {
+	public StockPriceModel priceModel;
+	
+	public StockModel(String code, String name) {
 		this.code = code;
 		this.name = name;
 	}

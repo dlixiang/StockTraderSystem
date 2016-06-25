@@ -14,6 +14,11 @@
 			<result name="success">/index.jsp</result>		
 			<result name="error">/index.jsp</result>	
 		</action>
+		
+		<action name="search" class="com.stocktrader.servlet.Search" method = "search">
+			<result name="success">/main.jsp</result>		
+			<result name="error">/main.jsp</result>	
+		</action>
 				
 	</package>
 

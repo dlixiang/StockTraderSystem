@@ -5,7 +5,7 @@ import java.util.Vector;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.stocktrader.db.DBUser;
-import com.stocktrader.db.Stock;
+import com.stocktrader.model.StockModel;
 
 public class Login extends ActionSupport {
 
@@ -26,10 +26,10 @@ public class Login extends ActionSupport {
 	}
 	
 	public String login(){
-		System.out.println(""+ username+", "+ password);
+		//System.out.println(""+ username+", "+ password);
 		DBUser dbuser = new DBUser();
 		String result = dbuser.checkLogin(username, password);
-		Vector<Stock> stockVector = dbuser.getStockVector();
+		Vector<StockModel> stockVector = dbuser.getStockVector();
 		
 		if(result != null){
 			ActionContext.getContext().getSession().put("username", username);

@@ -166,24 +166,6 @@ body {
 					}
 					%>
 
-
-
-				</div>
-
-
-
-				<div class="hero-unit">
-					<h2>My localboard</h2>
-					<h3>(push down "Ctrl+V" to refresh the local clipboard)</h3>
-					<label>type <textarea id="localType"
-							class="uneditable-input span2" readonly="true">
-                	text
-                </textarea>
-					</label>
-					<textarea id="localClipboard" class="clipboard span12"
-						readonly="true">
-              	
-              </textarea>
 				</div>
 
 			</div>

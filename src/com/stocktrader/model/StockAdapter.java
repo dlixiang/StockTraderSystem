@@ -11,7 +11,7 @@ import java.net.URL;
 
 public class StockAdapter {
 	private String getUrlString(String code){
-		String url = "http://hq.sinajs.cn/list=sh"+code;
+		String url = "http://hq.sinajs.cn/list="+code;
 		return url;
 	}
 	

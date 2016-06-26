@@ -7,9 +7,13 @@ public class StockModel {
 	
 	public StockPriceModel priceModel;
 	
+	public StockTrendModel trendModel;
+	
 	public StockModel(String code, String name) {
 		this.code = code;
 		this.name = name;
+		priceModel = new StockPriceModel();
+		trendModel = new StockTrendModel(code);
 	}
 	
 	public String getName() {

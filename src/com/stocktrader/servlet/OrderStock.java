@@ -69,7 +69,5 @@ public class OrderStock {
 	public void setUnitprice(String unitprice) {
 		this.unitprice = unitprice;
 	}
-	
-	
 }
 

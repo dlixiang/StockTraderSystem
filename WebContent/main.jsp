@@ -128,18 +128,20 @@ body {
 					%>
 					<table class="table table-striped">
 						<tr>
-							<td>1</td>
-							<td>TB - Monthly</td>
-							<td>01/04/2012</td>
-							<td>Approved</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>TB - Monthly</td>
-							<td>01/04/2012</td>
-							<td>Approved</td>
+							<td><%=stockModel.code%></td>
+							<td><%=stockModel.name%></td>
+							<td><%=stockModel.priceModel.currentPrice%></td>
+							<td><%=stockModel.priceModel.todayOpenPrice%></td>
+							<td><%=stockModel.priceModel.yesterdayClosePrice%></td>
+							<td><%=stockModel.priceModel.maxPrice%></td>
+							<td><%=stockModel.priceModel.minPrice%></td>
+							<td><%=stockModel.trendModel.todayTrendUrl%></td>
+							<td><%=stockModel.trendModel.weeklyTrendUrl%></td>
+							<td><%=stockModel.trendModel.monthlyTrendUrl%></td>
+							<td><%=stockModel.trendModel.yearlyTrendUrl%></td>
 						</tr>
 					</table>
+					
 					
 					<form id="orderstockform" action="orderstock" method="post">
 						<input class="span2" type="text" name="username"

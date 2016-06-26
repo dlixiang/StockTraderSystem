@@ -2,6 +2,7 @@ package com.stocktrader.servlet;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.stocktrader.db.DBUser;
+import com.stocktrader.model.StockAdapter;
 import com.stocktrader.model.StockModel;
 
 public class Search {
@@ -25,6 +26,8 @@ public class Search {
 		StockModel resStockModel = dbUser.searchStock(searchkeyword);
 		
 		if (resStockModel != null) {
+			StockAdapter adapter = new StockAdapter();
+			adapter.loadStockModel(resStockModel);
 			System.out.println("res stock model not null");
 			ActionContext.getContext().getSession().put("stockmodel", resStockModel);
 			ActionContext.getContext().getSession().put("searchresult", "success");

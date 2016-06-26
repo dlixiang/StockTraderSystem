@@ -12,13 +12,14 @@ public class OrderStock {
 	private String unitprice;
 	
 	public String orderStock(){
+		System.out.println("==>in OrderStock");
 		System.out.println("username: "+username);
 		System.out.println("type: "+type);
 		System.out.println("stockcode£º "+stockcode);
 		System.out.println("amount: "+amount);
 		System.out.println("unitprice: "+unitprice);
 		DBUser dbUser = new DBUser();
-		boolean res = dbUser.orderStock(username, type, stockcode, amount, unitprice);
+		boolean res = dbUser.orderStock(username, type, stockcode, Integer.parseInt(amount), Double.parseDouble(unitprice));
 		
 		if (res) {
 			ActionContext.getContext().getSession().put("orderstockresult", "success");

@@ -29,8 +29,6 @@ CREATE TABLE Account
 	amount 	INT
 );
 
-
-
 CREATE TABLE TradeRecord
 (
 	tradeid	  BIGINT(20) AUTO_INCREMENT, 
@@ -41,5 +39,6 @@ CREATE TABLE TradeRecord
 	stockcode	  VARCHAR(20) ,
 	FOREIGN KEY (stockcode) REFERENCES Stock(stockcode),
 	amount 	INT,
-	unitprice	FLOAT
-);
+	unitprice	FLOAT,
+	tradedatetime	DATETIME
+)AUTO_INCREMENT = 0;

@@ -16,6 +16,10 @@ public class Search {
 	}
 
 	public String search(){
+		if(searchkeyword == null){
+			ActionContext.getContext().getSession().put("searchresult", null);
+			return "error";
+		}
 		System.out.println("searchkeyword: "+searchkeyword);
 		DBUser dbUser = new DBUser();
 		StockModel resStockModel = dbUser.searchStock(searchkeyword);

@@ -9,6 +9,7 @@
 	Vector<StockModel> stockVector = (Vector<StockModel>)ActionContext.getContext().getSession().get("stockvector");
 	StockModel stockModel = (StockModel)ActionContext.getContext().getSession().get("stockmodel");
 	String searchResult = (String)ActionContext.getContext().getSession().get("searchresult");
+	String orderStockResult = (String)ActionContext.getContext().getSession().get("orderstockresult");
 	
 	
 	if(username == null)
@@ -138,50 +139,40 @@ body {
 							<td>01/04/2012</td>
 							<td>Approved</td>
 						</tr>
-						<%-- <%
-							for(int i = 0; i<stockVector.size(); i++){
-						%>
-						<tr>
-							<td>
-								<%
-									out.println(stockVector.get(i).code);
-								%>
-							</td>
-							<td>
-								<%
-									out.println(stockVector.get(i).name);
-								%>
-							</td>
-							<td>01/04/2012</td>
-							<td>Approved</td>
-						</tr>
-						<%
-							}
-						%> --%>
 					</table>
 					
-					<form id="orderstockform"
-						action="orderstock" method="post">
-
+					<form id="orderstockform" action="orderstock" method="post">
 						<input class="span2" type="text" name="username"
 							placeholder="username..." value="<%=username%>">
 						<input class="span2" type="text" name="type"
 							value="0">
-							<input class="span2" type="text" name="stockcode"
-							placeholder="stockcode..." value="<%=stockModel.code%>">
-							<input class="span2" type="text" name="amount"
-							placeholder="amount..." value="5">
-							<input class="span2" type="text" name="unitprice"
-							placeholder="unitprice..." value="100">	
+						<input class="span2" type="text" name="stockcode"
+						placeholder="stockcode..." value="<%=stockModel.code%>">
+						<input class="span2" type="text" name="amount"
+						placeholder="amount..." value="5">
+						<input class="span2" type="text" name="unitprice"
+						placeholder="unitprice..." value="100">	
 
 						<button class="btn" id="btn_search" type="submit" name="order"
 							>Submit Order</button>
 					</form>
 					
+							<%
+								if(orderStockResult != null){
+									if(orderStockResult.equals("success")){
+							%>
+								<label class="alert alert-success" id="DelFrdFailInfo"> order stock success! </label>
+								<%
+									} else if(orderStockResult.equals("error")){
+								%>
+								<label class="alert alert-error" id="DelFrdFailInfo"> order stock error! </label>
+									
 					<%
+									}
+								}
 						} else if(searchResult.equals("error")){
 					%>
-					<label class="alert alert-error" id="DelFrdFailInfo"> search error ! </label>
+						<label class="alert alert-error" id="DelFrdFailInfo"> search error ! </label>
 					<%
 						}
 					}

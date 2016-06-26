@@ -6,7 +6,6 @@
 <%
 	String username = (String) ActionContext.getContext().getSession()
 	.get("username");
-	Vector<StockModel> stockVector = (Vector<StockModel>)ActionContext.getContext().getSession().get("stockvector");
 	StockModel stockModel = (StockModel)ActionContext.getContext().getSession().get("stockmodel");
 	String searchResult = (String)ActionContext.getContext().getSession().get("searchresult");
 	String orderStockResult = (String)ActionContext.getContext().getSession().get("orderstockresult");
@@ -55,12 +54,29 @@ body {
 	}
 }
 </style>
-<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-<link href="assets/css/main.css" rel="stylesheet">
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
+<!-- <link href="assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
+<!-- <link href="assets/css/main.css" rel="stylesheet"> -->
+
+
+
+
+
+	   	<!-- DataTables style -->
+    <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.css">
+     <!-- Bootstrap style -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="./js/jquery.js"></script>
+     
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="./js/jquery.dataTables.js"></script>
+
+    <!-- Bootstrap js -->
+   <script src="./js/bootstrap.min.js"></script>  
+
+
+
+
 
 </head>
 
@@ -93,7 +109,7 @@ body {
 
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span3">
+			<div class="span4">
 				<div class="well sidebar-nav">
 					<ul class="nav nav-list">
 						
@@ -108,78 +124,185 @@ body {
 			<!--/span-->
 
 
-			<div class="span9">
+			<div class="span8">
 				<div class="hero-unit">
-					<h2>Company Stock Code</h2>
-
-					<form id="searchform"
-						action="search" method="post">
-
-						<input class="span2" type="text" name="searchkeyword"
-							placeholder="search keyword...">
-
-						<button class="btn" id="btn_search" type="submit" name="search"
-							value="Search">Search</button>
-					</form>
+				
+				<div>
+					<div class="panel panel-info">
+					    <div class="panel-heading">
+					        <h3 class="panel-title">Search Stock</h3>
+					    </div>
+					    <div class="panel-body">
+					        <form class="form-inline" id="searchform"
+											action="search" method="post">
+					            <div class="form-group">
+					                <input type="text" class="form-control span2" id="stockCode" placeholder="stock code" name="searchkeyword">
+					            </div>
+					            <button type="submit" class="btn btn-primary" id="btn_search" name="search">Search</button>
+					            
+					        </form>
+					        <%
+								if(searchResult != null){
+									if(searchResult.equals("error")){
+							%>
+					        <label class="alert alert-error" id="DelFrdFailInfo"> search error ! </label>
+					        <%
+					        			//searchResult = null;
+									}
+								}
+					        %>
+					    </div>
+					</div>	
 
 					<%
 						if(searchResult != null){
 							if(searchResult.equals("success")){
 					%>
-					<table class="table table-striped">
-						<tr>
-							<td><%=stockModel.code%></td>
-							<td><%=stockModel.name%></td>
-							<td><%=stockModel.priceModel.currentPrice%></td>
-							<td><%=stockModel.priceModel.todayOpenPrice%></td>
-							<td><%=stockModel.priceModel.yesterdayClosePrice%></td>
-							<td><%=stockModel.priceModel.maxPrice%></td>
-							<td><%=stockModel.priceModel.minPrice%></td>
-							<td><%=stockModel.trendModel.todayTrendUrl%></td>
-							<td><%=stockModel.trendModel.weeklyTrendUrl%></td>
-							<td><%=stockModel.trendModel.monthlyTrendUrl%></td>
-							<td><%=stockModel.trendModel.yearlyTrendUrl%></td>
-						</tr>
-					</table>
-					
-					
-					<form id="orderstockform" action="orderstock" method="post">
-						<input class="span2" type="text" name="username"
-							placeholder="username..." value="<%=username%>">
-						<input class="span2" type="text" name="type"
-							value="0">
-						<input class="span2" type="text" name="stockcode"
-						placeholder="stockcode..." value="<%=stockModel.code%>">
-						<input class="span2" type="text" name="amount"
-						placeholder="amount..." value="5">
-						<input class="span2" type="text" name="unitprice"
-						placeholder="unitprice..." value="100">	
 
-						<button class="btn" id="btn_search" type="submit" name="order"
-							>Submit Order</button>
-					</form>
+					<!--- stock info panel ---->
+					<div class="panel panel-info">
+					    <div class="panel-heading">
+					        <h3 class="panel-title">Stock Information</h3>
+					    </div>
+					    <div class="panel-body">
+					        <div class="row">
+					            <div class="col-xs-8">
+					                <h3><%=stockModel.name%> <span class="label label-default"><%=stockModel.code%></span></h3>
+					            </div>
+					             <div class="col-xs-4">
+					                <h3>￥<%=stockModel.priceModel.currentPrice%></h3>
+					            </div>
+					        </div>
+					        <div class="row">
+					          <div class="col-md-4">Today Opening Price:</div>
+					          <div class="col-md-2"><%=stockModel.priceModel.todayOpenPrice%></div>
+					          <div class="col-md-3">Max Price:</div>
+					          <div class="col-md-3"><%=stockModel.priceModel.maxPrice%></div>
+					        </div>
+					        <div class="row">
+					          <div class="col-md-4">Yesterday Closing Price:</div>
+					          <div class="col-md-2"><%=stockModel.priceModel.yesterdayClosePrice%></div>
+					          <div class="col-md-3">Min Price:</div>
+					          <div class="col-md-3"><%=stockModel.priceModel.minPrice%></div>
+					        </div>
+					    </div>
+					</div>
+
+					<!--- stock line chart image panel ---->
+					<div class="panel panel-warning">
+					    <div class="panel-heading">
+					        <h3 class="panel-title">Stock Trends</h3>
+					    </div>
+					    <div class="panel-body">
+					        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+					            <li class="active"><a href="#today" data-toggle="tab">Today</a></li>
+					            <li><a href="#weekly" data-toggle="tab">Weekly</a></li>
+					            <li><a href="#monthly" data-toggle="tab">Monthly</a></li>
+					            <li><a href="#yearly" data-toggle="tab">Yearly</a></li>
+					            
+					        </ul>
+					        <div id="my-tab-content" class="tab-content">
+					            <div class="tab-pane active" id="today">
+					                <img src="<%=stockModel.trendModel.todayTrendUrl%>" alt="today">
+					            </div>
+					            <div class="tab-pane" id="weekly">
+					                <img src="<%=stockModel.trendModel.weeklyTrendUrl%>" alt="weekly">
+					            </div>
+					            <div class="tab-pane" id="monthly">
+					                <img src="<%=stockModel.trendModel.monthlyTrendUrl%>" alt="monthly">
+					            </div>
+					            <div class="tab-pane" id="yearly">
+					                <img src="<%=stockModel.trendModel.yearlyTrendUrl%>" alt="yearly">
+					            </div>
+					        </div>
+					        <script type="text/javascript">
+					            jQuery(document).ready(function ($) {
+					                $('#tabs').tab();
+					            });
+					        </script>
+					    </div>
+					</div>
 					
-							<%
-								if(orderStockResult != null){
-									if(orderStockResult.equals("success")){
-							%>
-								<label class="alert alert-success" id="DelFrdFailInfo"> order stock success! </label>
-								<%
-									} else if(orderStockResult.equals("error")){
-								%>
-								<label class="alert alert-error" id="DelFrdFailInfo"> order stock error! </label>
-									
+					<!-- Trade Stock Form Panel-->
+					<div class="panel panel-success">
+					    <div class="panel-heading">
+					        <h3 class="panel-title">Trade Stock</h3>
+					    </div>
+					    <div class="panel-body">
+					
+					        <form id="orderstockform" action="orderstock" method="post">
+					        	<div class="form-group row">
+					                <label class="col-sm-2">Operations</label>
+					                <div class="col-sm-10">
+					                  <div class="radio">
+					                    <label>
+					                      <input type="radio" name="type" id="gridRadios1" value="0" checked>Buy
+					                    </label>
+					                  </div>
+					                  <div class="radio">
+					                    <label>
+					                      <input type="radio" name="type" id="gridRadios2" value="1">Sell
+					                    </label>
+					                  </div>
+					                </div>
+					            </div>
+					            <div class="form-group row">
+					            	<label class="col-sm-2 form-control-label">Username</label>
+					                <div class="col-sm-10">
+					                  <input type="text" class="span6 form-control" placeholder="Username"  name="username" value="<%=username%>">
+					                </div>
+					            </div>
+					            <div class="form-group row">
+					            	<label class="col-sm-2 form-control-label">Stock Code</label>
+					                <div class="col-sm-10">
+					                  <input type="text" class="span6 form-control" placeholder="Stock code"  name="stockcode" value="<%=stockModel.code%>">
+					                </div>
+					            </div>
+					            <div class="form-group row">
+					            	<label class="col-sm-2 form-control-label">Amount</label>
+					                <div class="col-sm-10">
+					                  <input type="text" class="span6 form-control" placeholder="Amount"  name="amount" value="5">
+					                </div>
+					            </div>
+					            <div class="form-group row">
+					         	   <label class="col-sm-2 form-control-label">Unit Price</label>
+					                <div class="col-sm-10">
+					                  <input type="text" class="span6 form-control" placeholder="Unit Price (￥)"  name="unitprice" value="100">
+					                </div>
+					            </div>
+					            
+					            
+					              <div class="form-group row">
+					                <div class="col-sm-offset-2 col-sm-10">
+					                  <button type="submit" class="btn btn-primary" id="btn_search" type="submit" name="order">Submit Order</button>
+					                </div>
+					              </div>
+					            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+					        </form>
+					    </div>
+					</div>
+
 					<%
-									}
-								}
-						} else if(searchResult.equals("error")){
-					%>
-						<label class="alert alert-error" id="DelFrdFailInfo"> search error ! </label>
-					<%
+							}
 						}
-					}
+					
+						if(orderStockResult != null){
+							if(orderStockResult.equals("success")){
 					%>
-
+						<label class="alert alert-success"> Order success! </label>
+						<%
+							} else if(orderStockResult.equals("error")){
+						%>
+						<label class="alert alert-error"> Order error! </label>
+					<%
+							}
+						}
+					%>
+				</div>
+				
+				
+				
+				
 				</div>
 
 			</div>

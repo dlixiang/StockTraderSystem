@@ -19,6 +19,12 @@
 			<result name="success">/main.jsp</result>		
 			<result name="error">/main.jsp</result>	
 		</action>
+		
+		
+		<action name="orderstock" class="com.stocktrader.servlet.OrderStock" method = "orderStock">
+			<result name="success">/main.jsp</result>		
+			<result name="error">/main.jsp</result>	
+		</action>
 				
 	</package>
 

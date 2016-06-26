@@ -10,6 +10,9 @@
 	StockModel stockModel = (StockModel)ActionContext.getContext().getSession().get("stockmodel");
 	String searchResult = (String)ActionContext.getContext().getSession().get("searchresult");
 	
+	
+	if(username == null)
+		response.sendRedirect("index.jsp");
 %>
 
 
@@ -135,7 +138,7 @@ body {
 							<td>01/04/2012</td>
 							<td>Approved</td>
 						</tr>
-						<%
+						<%-- <%
 							for(int i = 0; i<stockVector.size(); i++){
 						%>
 						<tr>
@@ -154,9 +157,27 @@ body {
 						</tr>
 						<%
 							}
-						%>
+						%> --%>
 					</table>
+					
+					<form id="orderstockform"
+						action="orderstock" method="post">
 
+						<input class="span2" type="text" name="username"
+							placeholder="username..." value="<%=username%>">
+						<input class="span2" type="text" name="type"
+							value="0">
+							<input class="span2" type="text" name="stockcode"
+							placeholder="stockcode..." value="<%=stockModel.code%>">
+							<input class="span2" type="text" name="amount"
+							placeholder="amount..." value="5">
+							<input class="span2" type="text" name="unitprice"
+							placeholder="unitprice..." value="100">	
+
+						<button class="btn" id="btn_search" type="submit" name="order"
+							>Submit Order</button>
+					</form>
+					
 					<%
 						} else if(searchResult.equals("error")){
 					%>

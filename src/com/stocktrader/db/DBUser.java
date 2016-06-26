@@ -97,7 +97,7 @@ public class DBUser {
 				pstm = conn.prepareStatement(sql);
 				pstm.setString(1, username);
 				pstm.setString(2, password);
-				pstm.setInt(3, 0);
+				pstm.setInt(3, 10000);
 				pstm.executeUpdate();
 			}
 			conn.close();
@@ -154,5 +154,12 @@ public class DBUser {
 			e.printStackTrace();
 		}
 		return resStockModel;
+	}
+
+	public boolean orderStock(String username, String type,
+			String stockcode, String amount, String unitprice) {
+		
+		
+		return false;
 	}
 }

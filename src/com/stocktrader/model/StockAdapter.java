@@ -15,8 +15,10 @@ public class StockAdapter {
 		return url;
 	}
 	
-	public void loadStockModel(StockModel stockModel){
+	public boolean loadStockModel(StockModel stockModel){
 		System.out.println("==>in loadStockModel, get data from url.");
+		
+		boolean res = false;
 		String urlString = getUrlString(stockModel.code);
 		URL url = null;
         try {
@@ -43,7 +45,10 @@ public class StockAdapter {
                 stockModel.priceModel.currentPrice = Double.parseDouble(resArray[3]);
                 stockModel.priceModel.maxPrice = Double.parseDouble(resArray[4]);
                 stockModel.priceModel.minPrice = Double.parseDouble(resArray[5]);
-            }
+                res = true;
+            } else {
+				res = false;
+			}
             
             
         } catch (MalformedURLException e) {
@@ -53,5 +58,6 @@ public class StockAdapter {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return res;
 	}
 }

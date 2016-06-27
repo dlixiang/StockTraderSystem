@@ -2,22 +2,24 @@
 
 <%@page import="com.stocktrader.servlet.UserProfile"%>
 <%@page import="com.stocktrader.model.StockModel"%>
+<%@page import="com.stocktrader.model.TradeRecordModel"%>
+<%@page import="com.stocktrader.model.UserAccountModel"%>
 <%@page import="com.opensymphony.xwork2.ActionContext"%>
 
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 	String username = (String) ActionContext.getContext().getSession()
 	.get("username");
+	if(username == null){
+		response.sendRedirect("index.jsp");
+	}
+		
 	UserProfile userProfile = new UserProfile();
 
 	Double balance = userProfile.getUserBalance(username);
-
-StockModel stockModel = (StockModel)ActionContext.getContext().getSession().get("stockmodel");
-String searchResult = (String)ActionContext.getContext().getSession().get("searchresult");
-String orderStockResult = (String)ActionContext.getContext().getSession().get("orderstockresult");
+	Vector<TradeRecordModel> tradeRecordVector = userProfile.getTradeRecord(username);
+	Vector<UserAccountModel> userAccountModel = userProfile.getUserAccountVector(username);
 	
-	if(username == null)
-		response.sendRedirect("index.jsp");
 %>
 
 
@@ -91,7 +93,7 @@ body {
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				
-				<a class="brand" href="#">Stock Trader System</a>
+				<a class="brand" href="./index.jsp">Stock Trader System</a>
 				<!-- <div class="nav-default pull-right"> -->
 					<p class="brand pull-right">
 						Welcome, <span id="myID"><%=username%></span>, <a href="#"
@@ -147,40 +149,24 @@ body {
 						<table id="example" class="display" cellspacing="0" width="100%">
 					        <thead>
 					            <tr>
-					                <th>Stock Name</th>
-					                <th>Stock Code</th>
-					                <th>Amount</th>
+					                <th>code</th>
+					                <th>name</th>
+					                <th>amount</th>
 					            </tr>
 					        </thead>
-					        <tfoot>
-					            <tr>
-					                <th>Stock Name</th>
-					                <th>Stock Code</th>
-					                <th>Amount</th>
-					            </tr>
-					        </tfoot>
 					        <tbody>
-					            <tr>
-					                <td data-search="Tiger Nixon">T. Nixon</td>
-					                <td>System Architect</td>
-					                <td>Edinburgh</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Garrett Winters">G. Winters</td>
-					                <td>Accountant</td>
-					                <td>Tokyo</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Ashton Cox">A. Cox</td>
-					                <td>Junior Technical Author</td>
-					                <td>San Francisco</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Cedric Kelly">C. Kelly</td>
-					                <td>Senior Javascript Developer</td>
-					                <td>Edinburgh</td>
-					            </tr>
-					                  
+					        <%
+					        	for(int index = 0; index < userAccountModel.size(); index++){
+					        %>
+					        		<tr>
+						                <td><%=userAccountModel.get(index).code %></td>
+						                <td><%=userAccountModel.get(index).name %></td>
+						                <td><%=userAccountModel.get(index).amount %></td>
+						                
+					            	</tr>
+					        <%		
+					        	}
+					        %>
 					        </tbody>
 					    </table>
 					  </div>
@@ -196,135 +182,32 @@ body {
 						<table id="Trade" class="display" cellspacing="0" width="100%">
 					        <thead>
 					            <tr>
-					                <th>Time</th>
-					                <th>Type(Buy/Sell)</th>
-					                <th>Stock Code</th>
-					                <th>Stock Name</th>
-					                <th>Amount</th>
-					                <th>Unit Price</th>
-					                <th>Total Price</th>
+					                <th>id</th>
+					                <th>username</th>
+					                <th>type</th>
+					                <th>code</th>
+					                <th>amount</th>
+					                <th>unitprice</th>
+					                <th>time</th>
 					            </tr>
 					        </thead>
-					        <tfoot>
-					            <tr>
-					                <th>Time</th>
-					                <th>Type(Buy/Sell)</th>
-					                <th>Stock Code</th>
-					                <th>Stock Name</th>
-					                <th>Amount</th>
-					                <th>Unit Price</th>
-					                <th>Total Price</th>
-					            </tr>
-					        </tfoot>
 					        <tbody>
-					            <tr>
-					                <td data-search="Tiger Nixon">T. Nixon</td>
-					                <td>System Architect</td>
-					                <td>Edinburgh</td>
-					                <td>61</td>
-					                <td data-order="1303686000">Mon 25th Apr 11</td>
-					                <td data-order="320800">$320,800/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Garrett Winters">G. Winters</td>
-					                <td>Accountant</td>
-					                <td>Tokyo</td>
-					                <td>63</td>
-					                <td data-order="1311548400">Mon 25th Jul 11</td>
-					                <td data-order="170750">$170,750/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Ashton Cox">A. Cox</td>
-					                <td>Junior Technical Author</td>
-					                <td>San Francisco</td>
-					                <td>66</td>
-					                <td data-order="1231718400">Mon 12th Jan 09</td>
-					                <td data-order="86000">$86,000/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Cedric Kelly">C. Kelly</td>
-					                <td>Senior Javascript Developer</td>
-					                <td>Edinburgh</td>
-					                <td>22</td>
-					                <td data-order="1332975600">Thu 29th Mar 12</td>
-					                <td data-order="433060">$433,060/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Airi Satou">A. Satou</td>
-					                <td>Accountant</td>
-					                <td>Tokyo</td>
-					                <td>33</td>
-					                <td data-order="1227830400">Fri 28th Nov 08</td>
-					                <td data-order="162700">$162,700/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Brielle Williamson">B. Williamson</td>
-					                <td>Integration Specialist</td>
-					                <td>New York</td>
-					                <td>61</td>
-					                <td data-order="1354406400">Sun 2nd Dec 12</td>
-					                <td data-order="372000">$372,000/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Herrod Chandler">H. Chandler</td>
-					                <td>Sales Assistant</td>
-					                <td>San Francisco</td>
-					                <td>59</td>
-					                <td data-order="1344207600">Mon 6th Aug 12</td>
-					                <td data-order="137500">$137,500/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>
-					            <tr>
-					                <td data-search="Herrod Chandler">H. Chandler</td>
-					                <td>Sales Assistant</td>
-					                <td>San Francisco</td>
-					                <td>59</td>
-					                <td data-order="1344207600">Mon 6th Aug 12</td>
-					                <td data-order="137500">$137,500/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>   
-					            <tr>
-					                <td data-search="Herrod Chandler">H. Chandler</td>
-					                <td>Sales Assistant</td>
-					                <td>San Francisco</td>
-					                <td>59</td>
-					                <td data-order="1344207600">Mon 6th Aug 12</td>
-					                <td data-order="137500">$137,500/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>   
-					            <tr>
-					                <td data-search="Herrod Chandler">H. Chandler</td>
-					                <td>Sales Assistant</td>
-					                <td>San Francisco</td>
-					                <td>59</td>
-					                <td data-order="1344207600">Mon 6th Aug 12</td>
-					                <td data-order="137500">$137,500/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr> 
-					            <tr>
-					                <td data-search="Herrod Chandler">H. Chandler</td>
-					                <td>Sales Assistant</td>
-					                <td>San Francisco</td>
-					                <td>59</td>
-					                <td data-order="1344207600">Mon 6th Aug 12</td>
-					                <td data-order="137500">$137,500/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>   
-					            <tr>
-					                <td data-search="Herrod Chandler">H. Chandler</td>
-					                <td>Sales Assistant</td>
-					                <td>San Francisco</td>
-					                <td>59</td>
-					                <td data-order="1344207600">Mon 6th Aug 12</td>
-					                <td data-order="137500">$137,500/y</td>
-					                <td data-order="320800">$320,800/y</td>
-					            </tr>              
+					        <%
+					        	for(int index = 0; index < tradeRecordVector.size(); index++){
+					        %>
+					        		<tr>
+						                <td><%=tradeRecordVector.get(index).tradeid %></td>
+						                <td><%=tradeRecordVector.get(index).username %></td>
+						                <td><%=tradeRecordVector.get(index).type %></td>
+						                <td><%=tradeRecordVector.get(index).stockcode %></td>
+						                <td><%=tradeRecordVector.get(index).amount %></td>
+						                <td><%=tradeRecordVector.get(index).unitprice %></td>
+						                <td><%=tradeRecordVector.get(index).tradedatetime%></td>
+					            	</tr>
+					        <%		
+					        	}
+					        %>
+					                   
 					        </tbody>
 					    </table>
 					  </div>

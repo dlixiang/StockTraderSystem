@@ -27,11 +27,12 @@ public class Search {
 		
 		if (resStockModel != null) {
 			StockAdapter adapter = new StockAdapter();
-			adapter.loadStockModel(resStockModel);
-			System.out.println("res stock model not null");
-			ActionContext.getContext().getSession().put("stockmodel", resStockModel);
-			ActionContext.getContext().getSession().put("searchresult", "success");
-			return "success";
+			if (adapter.loadStockModel(resStockModel)) {
+				System.out.println("res stock model not null");
+				ActionContext.getContext().getSession().put("stockmodel", resStockModel);
+				ActionContext.getContext().getSession().put("searchresult", "success");
+				return "success";
+			}
 		}
 		System.out.println("res stock model is null!");
 		ActionContext.getContext().getSession().put("searchresult", "error");

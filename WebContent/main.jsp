@@ -86,7 +86,7 @@ body {
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				
-				<a class="brand" href="#">Stock Trader System</a>
+				<a class="brand" href="./index.jsp">Stock Trader System</a>
 				<!-- <div class="nav-default pull-right"> -->
 					<p class="brand pull-right">
 						Welcome, <span id="myID"><%=username%></span>, <a href="#"

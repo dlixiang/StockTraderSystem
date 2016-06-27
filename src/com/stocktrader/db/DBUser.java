@@ -9,7 +9,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
+import org.apache.catalina.User;
+
 import com.stocktrader.model.StockModel;
+import com.stocktrader.model.TradeRecordModel;
+import com.stocktrader.model.UserAccountModel;
 
 public class DBUser {
 
@@ -19,7 +23,66 @@ public class DBUser {
 	private PreparedStatement pstm = null;
 
 	private Vector<StockModel> stockVector = null;
+	private Vector<TradeRecordModel> tradeRecordVector = null;
+	private Vector<UserAccountModel> userAccountVector = null;
+	
+	public Vector<UserAccountModel> getUserAccountModelVector(String username) {
+		UserAccountModel userAccountModel = null;
+		userAccountVector = new Vector<UserAccountModel>();
+		try {
+			conn = (Connection) DBTools.getConnection();
+			String sql = "SELECT s.stockcode, s.name, SUM(amount) as amount FROM traderecord t, stock s WHERE t.stockcode=s.stockcode and t.username='"+username+"' GROUP BY stockcode;";
+			System.out.println(sql);
+			//SELECT stockcode, SUM(amount) FROM traderecord WHERE username='bofan' GROUP BY stockcode;
 
+			if (!conn.isClosed()) {
+				stm = conn.createStatement();
+				rs = stm.executeQuery(sql);
+				while (rs.next()) {
+					userAccountModel = new UserAccountModel();
+					userAccountModel.code = rs.getString("stockcode");
+					userAccountModel.name = rs.getString("name");
+					userAccountModel.amount = rs.getString("amount");
+					userAccountVector.add(userAccountModel);
+				}
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userAccountVector;
+	}
+	public Vector<TradeRecordModel> getTradeRecordVector(String username) {
+		TradeRecordModel tradeRecordModel = null;
+		tradeRecordVector = new Vector<TradeRecordModel>();
+		try {
+			conn = (Connection) DBTools.getConnection();
+			String sql = "select * from traderecord where username='"+username+"';";
+
+			if (!conn.isClosed()) {
+				stm = conn.createStatement();
+				rs = stm.executeQuery(sql);
+				while (rs.next()) {
+					tradeRecordModel = new TradeRecordModel();
+					tradeRecordModel.tradeid = rs.getString("tradeid");
+					tradeRecordModel.username = rs.getString("username");
+					tradeRecordModel.type = rs.getString("type");
+					tradeRecordModel.stockcode = rs.getString("stockcode");
+					tradeRecordModel.amount = rs.getString("amount");
+					tradeRecordModel.unitprice = rs.getString("unitprice");
+					tradeRecordModel.tradedatetime = rs.getString("tradedatetime");
+					
+					tradeRecordVector.add(tradeRecordModel);
+					
+				}
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tradeRecordVector;
+	}
+	
 	public Vector<StockModel> getStockVector() {
 		String stockcode = null;
 		String stockname = null;
@@ -156,6 +219,7 @@ public class DBUser {
 		Date nowDate = new Date();
 		String tradeDateTime = sdf.format(nowDate);
 		System.out.println(tradeDateTime);
+		System.out.println("type: "+type);
 
 		if (type.equals("0")) { // buy stock
 			if (balance >= totalPrice) {
@@ -169,7 +233,7 @@ public class DBUser {
 			balance += totalPrice;
 
 			updateBalance(balance, username);
-			recordTrade(username, type, stockcode, amount, unitprice,
+			recordTrade(username, type, stockcode, -amount, unitprice,
 					tradeDateTime);
 			res = true;
 		}

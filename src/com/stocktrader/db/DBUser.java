@@ -216,7 +216,7 @@ public class DBUser {
 		}
 	}
 
-	private double getUserBalance(String username) {
+	public double getUserBalance(String username) {
 		double res = -1.0;
 		
 		conn = DBTools.getConnection();

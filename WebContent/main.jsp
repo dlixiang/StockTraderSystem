@@ -306,7 +306,7 @@ body {
 		<hr>
 
 		<footer>
-			<p>&copy; Copyright 2013 Bofan. All rights reserved.</p>
+			<p>&copy; Copyright 2016 Jiaqi Qin. All rights reserved.</p>
 		</footer>
 
 	</div>

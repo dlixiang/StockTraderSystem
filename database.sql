@@ -17,8 +17,6 @@ CREATE TABLE StockUser
 	balance 	FLOAT
 );
 
-
-
 CREATE TABLE Account
 (
 	accountid	BIGINT(20) AUTO_INCREMENT, 

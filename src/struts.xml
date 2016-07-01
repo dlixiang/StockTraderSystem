@@ -30,32 +30,4 @@
 
 
 
-    <package name="lrq" namespace="/" extends="struts-default">
-  		<!--  登陆信息 -->
-		<action name="loginq" class="lr.LoRe" method = "Log">
-			<result name="boss">/Boss.jsp</result>		
-			<result name="employee">/Employee.jsp</result>
-			<result name="fail">/Login.jsp</result>	
-		</action>
-				
-	</package>
-	<package name="lrqq" namespace="/" extends="struts-default">
-  		<!--  登陆信息 -->		
-		
-		<action name="registerq" class="lr.LoRe" method = "Reg">
-			<result name="success">/Login.jsp</result>
-			
-		</action>	
-			
-	</package>
-<package name="lrqqq" namespace="/" extends="struts-default">
-  		<!--  登陆信息 -->		
-		
-		<action name="uploadd" class="lr.sale" method = "update1">
-			<result name="success">/Employee.jsp</result>
-			<result name="fail">/Employee.jsp</result>	
-		</action>	
-	
-	</package>
-
 </struts>

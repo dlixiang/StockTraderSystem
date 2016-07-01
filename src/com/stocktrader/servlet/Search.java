@@ -2,7 +2,7 @@ package com.stocktrader.servlet;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.stocktrader.db.DBUser;
-import com.stocktrader.model.StockAdapter;
+import com.stocktrader.service.StockAdapter;
 import com.stocktrader.model.StockModel;
 
 public class Search {

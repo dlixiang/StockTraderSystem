@@ -1,4 +1,4 @@
-package com.stocktrader.model;
+package com.stocktrader.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import com.stocktrader.model.StockModel;
 
 public class StockAdapter {
 	private String getUrlString(String code){

@@ -89,7 +89,7 @@ body {
 				<a class="brand" href="./index.jsp">Stock Trader System</a>
 				<!-- <div class="nav-default pull-right"> -->
 					<p class="brand pull-right">
-						Welcome, <span id="myID"><%=username%></span>, <a href="#"
+						Welcome, <span id="myID"><%=username%></span>, <a href="./index.jsp"
 							class="navbar-link">(Log out)</a>
 					</p>
 					

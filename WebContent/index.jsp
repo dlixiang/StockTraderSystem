@@ -1,5 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@page import="com.opensymphony.xwork2.ActionContext"%>
 <%
+	ActionContext.getContext().getSession().put("username", null);
 // String path = request.getContextPath();
 // String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
@@ -102,8 +104,7 @@
       <div class="hero-unit">
         <h1>Stock Trader System</h1>
         <br>
-        <p> A portable clipboard on the cloud.</p>
-        <p> A sharing clipboard with your friends and colleague.</p>
+        <p> A platform for you to search and trade stocks.</p>
         <p><a id="btn_signinnow" href="#" role="button" data-toggle="modal" class="btn btn-primary btn-large">Sign in NOW &raquo;</a></p>
         
       </div>
@@ -162,22 +163,7 @@
       </div>
 
 
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="span4">
-          <h2>What's this?</h2>
-          <p>This is a cloud clipboard where you can sync your local clipboard to share clipboard among different devices.</p>
-        </div>
-        <div class="span4">
-          <h2>Why I use?</h2>
-          <p> You can copy anywhere and paste everywhere.</p>
-          <p> You can also easily share your clipboard with your friend.</p>
-       </div>
-        <div class="span4">
-          <h2>How to use?</h2>
-          <p> Login with your account just pressing ctrl+C on your device, then login with the same account on the other devices and you can get the context just by pressing ctrl+V.</p>
-        </div>
-      </div>
+      
 
       <hr>
 

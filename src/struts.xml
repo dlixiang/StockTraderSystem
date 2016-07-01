@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="stocktrader" namespace="/" extends="struts-default">
+		<action name="login" class="com.stocktrader.servlet.Login" method = "login">
+			<result name="success">/main.jsp</result>		
+			<result name="error">/index.jsp</result>	
+		</action>
+		
+		<action name="register" class="com.stocktrader.servlet.Register" method = "register">
+			<result name="success">/index.jsp</result>		
+			<result name="error">/index.jsp</result>	
+		</action>
+		
+		<action name="search" class="com.stocktrader.servlet.Search" method = "search">
+			<result name="success">/main.jsp</result>		
+			<result name="error">/main.jsp</result>	
+		</action>
+		
+		
+		<action name="orderstock" class="com.stocktrader.servlet.OrderStock" method = "orderStock">
+			<result name="success">/main.jsp</result>		
+			<result name="error">/main.jsp</result>	
+		</action>
+				
+	</package>
+
+
+
+</struts>

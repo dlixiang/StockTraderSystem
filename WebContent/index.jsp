@@ -121,9 +121,9 @@
             <h2 class="form-signin-heading">Sign in your account</h2>
             <input type="text" class="input-block-level" name="username" placeholder="Username">
             <input type="password" class="input-block-level" name="password" placeholder="Password" onpaste="return false;">
-            <label class="checkbox">
+            <!-- <label class="checkbox">
               <input id="remember" type="checkbox" value="remember-me"> Remember me
-            </label>
+            </label> -->
             <label class="alert alert-success" style="display:none" id="loginSuccessInfo">
 		  		Login successful !
 				</label>
